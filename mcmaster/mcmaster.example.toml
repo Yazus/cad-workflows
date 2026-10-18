@@ -1,0 +1,7 @@
+# Copy to mcmaster.toml (gitignored) and fill in.
+# Environment variables MCMASTER_USERNAME / _PASSWORD / _CERT / _KEY override these.
+[mcmaster]
+username = "you@company.com"
+password = "your mcmaster.com password"
+cert = "~/.mcmaster/client-cert.pem"
+key = "~/.mcmaster/client-key.pem"
