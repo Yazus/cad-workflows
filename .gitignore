@@ -1,0 +1,19 @@
+# Credentials: never commit
+mcmaster.toml
+*.pem
+*.pfx
+*.p12
+.env
+
+# Output
+mcmaster-output/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+build/
+dist/
