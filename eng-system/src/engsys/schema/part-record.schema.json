@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engsys/part-record/v1",
+  "title": "Engineering part record",
+  "description": "Single source of truth for one part revision, from intake to production. Characteristic ids link every document.",
+  "type": "object",
+  "required": ["schema", "part", "requirements", "characteristics"],
+  "properties": {
+    "schema": {"const": "engsys/part-record/v1"},
+    "part": {
+      "type": "object",
+      "required": ["id", "name", "rev", "units", "export_control"],
+      "properties": {
+        "id": {"type": "string", "description": "Short id used in file names, e.g. SUP-4277"},
+        "nsn": {"type": "string"},
+        "pn": {"type": "string"},
+        "cage": {"type": "string"},
+        "name": {"type": "string"},
+        "rev": {"type": "string", "pattern": "^[A-Z]{1,2}$"},
+        "units": {"enum": ["in", "mm"]},
+        "drafting_standard": {"type": "string", "default": "ASME Y14.5-2018"},
+        "mock": {"type": "boolean", "default": false, "description": "True when values are invented or photo-scaled. Every output file name then carries MOCK."},
+        "criticality": {"type": "string"},
+        "export_control": {
+          "type": "object",
+          "required": ["itar"],
+          "properties": {
+            "itar": {"type": "boolean"},
+            "demil": {"type": "string"},
+            "eccn": {"type": "string"},
+            "distribution": {"type": "string"}
+          }
+        },
+        "spec_ref": {"type": "string", "description": "Path to the part-spec.json or data pack this record came from"}
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "text", "type", "source"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^R[0-9]+$"},
+          "text": {"type": "string"},
+          "type": {"enum": ["function", "fit", "load", "environment", "material", "finish", "marking", "regulatory", "other"]},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "characteristics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "feature", "kind", "class", "source"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^C[0-9]+$"},
+          "feature": {"type": "string"},
+          "kind": {"enum": ["dimension", "gdt", "material", "finish", "process", "note", "test"]},
+          "requirement_text": {"type": "string", "description": "As written on the drawing, e.g. 4X Ø.286 ±.005"},
+          "nominal": {"type": "number"},
+          "lsl": {"type": "number"},
+          "usl": {"type": "number"},
+          "gdt": {
+            "type": "object",
+            "properties": {
+              "symbol": {"type": "string"},
+              "tol": {"type": "number"},
+              "modifier": {"enum": ["", "MMC", "LMC", "RFS"]},
+              "datums": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "class": {"enum": ["KC", "CC", "SC", "std"], "description": "KC key, CC critical (safety), SC significant, std standard"},
+          "source": {"enum": ["FLIS", "PHOTO", "MEASURED", "MOCK", "IPB", "DRAWING", "CATALOG", "SPEC", "DERIVED", "ASSUMED"]},
+          "source_note": {"type": "string"},
+          "requirement_ids": {"type": "array", "items": {"type": "string"}},
+          "datum": {"type": "string"},
+          "drawing_zone": {"type": "string"},
+          "balloon": {"type": "integer"}
+        }
+      }
+    },
+    "bom": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["find", "pn", "description", "qty"],
+        "properties": {
+          "find": {"type": "integer"},
+          "pn": {"type": "string"},
+          "description": {"type": "string"},
+          "qty": {"type": "number"},
+          "uom": {"type": "string", "default": "EA"},
+          "material": {"type": "string"},
+          "spec": {"type": "string"},
+          "make_buy": {"enum": ["make", "buy"]},
+          "source": {"type": "string"}
+        }
+      }
+    },
+    "design_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "gate", "date", "reviewer", "findings"],
+        "properties": {
+          "id": {"type": "string"},
+          "gate": {"enum": ["G0", "G1", "G2", "G3", "G4", "G5"]},
+          "date": {"type": "string"},
+          "reviewer": {"type": "string"},
+          "signed": {"type": "boolean", "default": false},
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "severity", "text", "status"],
+              "properties": {
+                "id": {"type": "string"},
+                "severity": {"enum": ["blocker", "major", "minor", "note"]},
+                "area": {"type": "string"},
+                "text": {"type": "string"},
+                "char_ids": {"type": "array", "items": {"type": "string"}},
+                "status": {"enum": ["open", "closed", "accepted"]},
+                "resolution": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "stackups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "target", "contributors"],
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "requirement_ids": {"type": "array", "items": {"type": "string"}},
+          "target": {"type": "object", "properties": {"min": {"type": "number"}, "max": {"type": "number"}}},
+          "method": {"enum": ["worst_case", "rss"], "default": "worst_case", "description": "Method the gate judges against"},
+          "contributors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "sign"],
+              "properties": {
+                "name": {"type": "string"},
+                "char_id": {"type": "string"},
+                "nominal": {"type": "number"},
+                "lsl": {"type": "number"},
+                "usl": {"type": "number"},
+                "sign": {"enum": [1, -1]},
+                "dist": {"enum": ["normal", "uniform"], "default": "normal"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "dfmea": {"type": "array", "items": {"$ref": "#/$defs/fmea_line"}},
+    "process": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["op", "name"],
+        "properties": {
+          "op": {"type": "integer"},
+          "name": {"type": "string"},
+          "workcenter": {"type": "string"},
+          "machine": {"type": "string"},
+          "setup": {"type": "string"},
+          "makes": {"type": "array", "items": {"type": "string"}, "description": "Characteristic ids created or changed at this operation"},
+          "special_process": {"type": "string"},
+          "instructions": {"type": "string"}
+        }
+      }
+    },
+    "pfmea": {"type": "array", "items": {"$ref": "#/$defs/fmea_line"}},
+    "control_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["char_id", "op", "method", "sample_size", "frequency", "reaction_plan"],
+        "properties": {
+          "char_id": {"type": "string"},
+          "op": {"type": "integer"},
+          "phase": {"enum": ["prototype", "pre-launch", "production"], "default": "production"},
+          "method": {"type": "string", "description": "Evaluation / measurement technique"},
+          "gauge": {"type": "string"},
+          "sample_size": {"type": "string"},
+          "frequency": {"type": "string"},
+          "control_method": {"type": "string"},
+          "reaction_plan": {"type": "string"}
+        }
+      }
+    },
+    "inspection_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["char_id", "stage", "method"],
+        "properties": {
+          "char_id": {"type": "string"},
+          "stage": {"enum": ["receiving", "in-process", "final", "FAI"]},
+          "method": {"type": "string"},
+          "gauge": {"type": "string"},
+          "sample": {"type": "string"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "fai": {
+      "type": "object",
+      "properties": {
+        "report_no": {"type": "string"},
+        "type": {"enum": ["full", "partial"]},
+        "reason": {"type": "string"},
+        "serial": {"type": "string"},
+        "organization": {"type": "string"},
+        "materials": {"type": "array", "items": {"type": "object"}},
+        "special_processes": {"type": "array", "items": {"type": "object"}},
+        "functional_tests": {"type": "array", "items": {"type": "object"}},
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["char_id", "result"],
+            "properties": {
+              "char_id": {"type": "string"},
+              "result": {"type": ["number", "string"]},
+              "tooling": {"type": "string"},
+              "ncr": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ecn", "date", "from_rev", "to_rev", "description", "reason"],
+        "properties": {
+          "ecn": {"type": "string"},
+          "date": {"type": "string"},
+          "from_rev": {"type": "string"},
+          "to_rev": {"type": "string"},
+          "description": {"type": "string"},
+          "reason": {"type": "string"},
+          "class": {"enum": ["I", "II"], "description": "Class I affects form, fit or function and needs customer approval"},
+          "char_ids": {"type": "array", "items": {"type": "string"}},
+          "affected_docs": {"type": "array", "items": {"type": "string"}},
+          "fai_required": {"enum": ["none", "partial", "full"]},
+          "approved_by": {"type": "string"},
+          "status": {"enum": ["draft", "approved", "rejected"]}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "fmea_line": {
+      "type": "object",
+      "required": ["id", "item", "function", "failure_mode", "effect", "S", "cause", "O", "D"],
+      "properties": {
+        "id": {"type": "string"},
+        "item": {"type": "string", "description": "DFMEA: structure element. PFMEA: process step"},
+        "op": {"type": "integer"},
+        "function": {"type": "string"},
+        "requirement_ids": {"type": "array", "items": {"type": "string"}},
+        "failure_mode": {"type": "string"},
+        "effect": {"type": "string"},
+        "S": {"type": "integer", "minimum": 1, "maximum": 10},
+        "cause": {"type": "string"},
+        "char_ids": {"type": "array", "items": {"type": "string"}},
+        "dfmea_ids": {"type": "array", "items": {"type": "string"}, "description": "PFMEA only: the DFMEA lines whose effect this process failure leads to"},
+        "prevention": {"type": "string"},
+        "O": {"type": "integer", "minimum": 1, "maximum": 10},
+        "detection": {"type": "string"},
+        "D": {"type": "integer", "minimum": 1, "maximum": 10},
+        "actions": {"type": "string"},
+        "owner": {"type": "string"},
+        "due": {"type": "string"},
+        "status": {"type": "string"}
+      }
+    }
+  }
+}
