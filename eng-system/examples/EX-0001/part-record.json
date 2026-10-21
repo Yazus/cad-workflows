@@ -1,0 +1,130 @@
+{
+  "schema": "engsys/part-record/v1",
+  "part": {
+    "id": "EX-0001",
+    "pn": "EX-0001-1",
+    "name": "Bearing housing, pillow block, 1/2 shaft (worked example)",
+    "rev": "A",
+    "units": "in",
+    "drafting_standard": "ASME Y14.5-2018",
+    "mock": false,
+    "criticality": "none",
+    "export_control": {"itar": false, "demil": "A", "distribution": "Distribution A: public example, not a real part"},
+    "spec_ref": "examples/EX-0001/part-record.json"
+  },
+  "requirements": [
+    {"id": "R1", "type": "function", "text": "Carry a 1/2 in shaft in a sealed ball bearing with its axis parallel to the mounting face and located to the bolt pattern within .004", "source": "example customer spec"},
+    {"id": "R2", "type": "fit", "text": "Mount with four 1/4 in floating fasteners on a flat pad", "source": "example customer spec"},
+    {"id": "R3", "type": "load", "text": "Bearing retained against 200 lbf axial push-out", "source": "example customer spec"},
+    {"id": "R4", "type": "environment", "text": "Resist corrosion in an outdoor, unsheltered environment", "source": "example customer spec"},
+    {"id": "R5", "type": "marking", "text": "Marked with part number and rev per MIL-STD-130", "source": "example customer spec"}
+  ],
+  "characteristics": [
+    {"id": "C1", "balloon": 1, "drawing_zone": "B3", "feature": "Overall width", "kind": "dimension", "requirement_text": "3.000 ±.010", "nominal": 3.0, "lsl": 2.99, "usl": 3.01, "class": "std", "source": "DRAWING", "requirement_ids": ["R2"]},
+    {"id": "C2", "balloon": 2, "drawing_zone": "C3", "feature": "Overall length along bearing axis", "kind": "dimension", "requirement_text": "2.000 ±.010", "nominal": 2.0, "lsl": 1.99, "usl": 2.01, "class": "std", "source": "DRAWING"},
+    {"id": "C3", "balloon": 3, "drawing_zone": "B2", "feature": "Overall height", "kind": "dimension", "requirement_text": "1.500 ±.010", "nominal": 1.5, "lsl": 1.49, "usl": 1.51, "class": "std", "source": "DRAWING"},
+    {"id": "C4", "balloon": 4, "drawing_zone": "B2", "feature": "Bearing bore diameter", "kind": "dimension", "requirement_text": "Ø1.1235-1.1240", "nominal": 1.12375, "lsl": 1.1235, "usl": 1.124, "class": "KC", "source": "DRAWING", "source_note": "sized for .0005-.0015 interference with an R8 bearing OD", "requirement_ids": ["R1", "R3"]},
+    {"id": "C5", "balloon": 5, "drawing_zone": "B2", "feature": "Bearing bore position", "kind": "gdt", "requirement_text": "⌖ Ø.004 A B(M)", "gdt": {"symbol": "position", "tol": 0.004, "modifier": "RFS", "datums": ["A", "B(M)"]}, "nominal": 0, "lsl": 0, "usl": 0.004, "class": "KC", "source": "DRAWING", "requirement_ids": ["R1"]},
+    {"id": "C6", "balloon": 6, "drawing_zone": "A3", "feature": "Mounting face flatness (datum A)", "kind": "gdt", "requirement_text": "⏥ .002", "gdt": {"symbol": "flatness", "tol": 0.002, "modifier": "", "datums": []}, "nominal": 0, "lsl": 0, "usl": 0.002, "class": "SC", "source": "DRAWING", "datum": "A", "requirement_ids": ["R1", "R2"]},
+    {"id": "C7", "balloon": 7, "drawing_zone": "A2", "feature": "Mounting holes (datum B)", "kind": "dimension", "requirement_text": "4X Ø.281 ±.005", "nominal": 0.281, "lsl": 0.276, "usl": 0.286, "class": "std", "source": "DRAWING", "datum": "B", "requirement_ids": ["R2"]},
+    {"id": "C8", "balloon": 8, "drawing_zone": "A2", "feature": "Mounting hole pattern position", "kind": "gdt", "requirement_text": "⌖ Ø.014 (M) A", "gdt": {"symbol": "position", "tol": 0.014, "modifier": "MMC", "datums": ["A"]}, "nominal": 0, "lsl": 0, "usl": 0.014, "class": "std", "source": "DRAWING", "requirement_ids": ["R2"]},
+    {"id": "C9", "balloon": 9, "drawing_zone": "C2", "feature": "Bearing pocket depth", "kind": "dimension", "requirement_text": ".318 ±.002", "nominal": 0.318, "lsl": 0.316, "usl": 0.32, "class": "KC", "source": "DRAWING", "source_note": "bearing width plus staking lip", "requirement_ids": ["R3"]},
+    {"id": "C10", "balloon": 10, "drawing_zone": "D1", "feature": "Material", "kind": "material", "requirement_text": "6061-T651 plate per AMS 4027", "class": "std", "source": "DRAWING", "requirement_ids": ["R3"]},
+    {"id": "C11", "balloon": 11, "drawing_zone": "D1", "feature": "Finish", "kind": "finish", "requirement_text": "Chemical film per MIL-DTL-5541, Type II, Class 3", "class": "SC", "source": "DRAWING", "requirement_ids": ["R4"]},
+    {"id": "C12", "balloon": 12, "drawing_zone": "D1", "feature": "Bearing staked; push-out proof load", "kind": "test", "requirement_text": "Stake 3 places; proof 200 lbf axial, no movement", "class": "KC", "source": "DRAWING", "requirement_ids": ["R3"]},
+    {"id": "C13", "balloon": 13, "drawing_zone": "D1", "feature": "Part marking", "kind": "note", "requirement_text": "Ink-mark P/N and rev per MIL-STD-130, .12 high, location as shown", "class": "std", "source": "DRAWING", "requirement_ids": ["R5"]}
+  ],
+  "bom": [
+    {"find": 1, "pn": "EX-0001-3", "description": "Housing, machined", "qty": 1, "material": "6061-T651", "spec": "AMS 4027", "make_buy": "make"},
+    {"find": 2, "pn": "R8-2RS", "description": "Ball bearing, sealed, 1/2 x 1-1/8 x 5/16", "qty": 1, "spec": "ABEC-1", "make_buy": "buy", "source": "CATALOG"}
+  ],
+  "design_reviews": [
+    {"id": "DR1", "gate": "G2", "date": "2026-10-21", "reviewer": "design-reviewer agent", "signed": true, "findings": [
+      {"id": "F1", "severity": "major", "area": "fit", "text": "Bore was 1.1240-1.1245: zero interference at worst case", "char_ids": ["C4"], "status": "closed", "resolution": "Bore moved to 1.1235-1.1240 (stack-up S1)"},
+      {"id": "F2", "severity": "minor", "area": "drawing", "text": "Marking location not dimensioned", "char_ids": ["C13"], "status": "accepted", "resolution": "Location as shown is acceptable for ink marking"}
+    ]},
+    {"id": "DR2", "gate": "G3", "date": "2026-10-21", "reviewer": "process reviewer", "signed": true, "findings": [
+      {"id": "F1", "severity": "minor", "area": "process", "text": "Bore and pocket must be cut in the same setup as the datum B holes are located", "char_ids": ["C5"], "status": "closed", "resolution": "Op 40 locates on A and two B holes"}
+    ]},
+    {"id": "DR3", "gate": "G4", "date": "2026-10-21", "reviewer": "quality", "signed": true, "findings": []}
+  ],
+  "stackups": [
+    {"id": "S1", "name": "Bearing press fit interference (OD - bore)", "requirement_ids": ["R3"], "target": {"min": 0.0003, "max": 0.0018}, "method": "worst_case", "contributors": [
+      {"name": "Bearing OD (R8, ABEC-1: 1.1250 +0/-.0005)", "nominal": 1.125, "lsl": 1.1245, "usl": 1.125, "sign": 1, "dist": "normal"},
+      {"name": "Housing bore", "char_id": "C4", "sign": -1}
+    ]},
+    {"id": "S2", "name": "Staking lip (pocket depth - bearing width)", "requirement_ids": ["R3"], "target": {"min": 0.002, "max": 0.015}, "method": "worst_case", "contributors": [
+      {"name": "Pocket depth", "char_id": "C9", "sign": 1},
+      {"name": "Bearing width (5/16, +0/-.005)", "nominal": 0.3125, "lsl": 0.3075, "usl": 0.3125, "sign": -1, "dist": "uniform"}
+    ]}
+  ],
+  "dfmea": [
+    {"id": "D1", "item": "Housing / bearing bore", "function": "Grip the bearing outer race", "requirement_ids": ["R3"], "failure_mode": "Interference too low", "effect": "Bearing spins or walks out; shaft misaligns, loss of function", "S": 8, "cause": "Bore diameter specified too large for bearing OD tolerance", "char_ids": ["C4"], "prevention": "Worst-case press fit stack-up S1", "O": 2, "detection": "Design review DR1; push-out proof test C12", "D": 3},
+    {"id": "D2", "item": "Housing / bearing bore", "function": "Grip the bearing outer race", "requirement_ids": ["R1"], "failure_mode": "Interference too high", "effect": "Outer race shrinks, bearing binds, early wear", "S": 6, "cause": "Bore specified too small", "char_ids": ["C4"], "prevention": "Stack-up S1 upper limit .0018", "O": 2, "detection": "Rotation torque check after press", "D": 4},
+    {"id": "D3", "item": "Housing / bore location", "function": "Hold the bearing axis on the bolt pattern", "requirement_ids": ["R1"], "failure_mode": "Bore off position", "effect": "Shaft misaligned to mating structure; binding and wear", "S": 7, "cause": "Position tolerance too loose for the shaft alignment budget", "char_ids": ["C5"], "prevention": "Position Ø.004 to A, B(M) from the alignment budget", "O": 3, "detection": "Design review DR1", "D": 5, "actions": "Confirm the alignment budget with the mating assembly owner", "owner": "lead engineer", "due": "2026-11-01", "status": "open"},
+    {"id": "D4", "item": "Housing / pocket", "function": "Leave material to stake over the bearing", "requirement_ids": ["R3"], "failure_mode": "No staking lip", "effect": "Bearing cannot be staked; retained by press fit only, push-out risk", "S": 8, "cause": "Pocket depth not set from bearing width tolerance", "char_ids": ["C9"], "prevention": "Stack-up S2", "O": 2, "detection": "Design review DR1", "D": 3},
+    {"id": "D5", "item": "Assembly / retention", "function": "Hold the bearing against 200 lbf axial load", "requirement_ids": ["R3"], "failure_mode": "Bearing pushes out under load", "effect": "Shaft support lost; mating mechanism jams or disconnects", "S": 9, "cause": "Staking too shallow or too few places", "char_ids": ["C12"], "prevention": "3-place staking; proof load on every part", "O": 2, "detection": "100% proof test", "D": 2},
+    {"id": "D6", "item": "Housing / mounting", "function": "Seat flat and bolt up", "requirement_ids": ["R2"], "failure_mode": "Holes do not align with the pad", "effect": "Cannot install, or part bent on bolt-up", "S": 5, "cause": "Hole size and position not set from floating fastener formula", "char_ids": ["C7", "C8"], "prevention": "T = H - F: .276 - .250 = .026 total, split .014 here", "O": 2, "detection": "Design review DR1", "D": 4},
+    {"id": "D7", "item": "Housing / surface", "function": "Resist corrosion", "requirement_ids": ["R4"], "failure_mode": "Corrosion of housing", "effect": "Loss of appearance; pitting near the bore over years", "S": 4, "cause": "Finish not suited to outdoor exposure", "char_ids": ["C11", "C10"], "prevention": "6061-T6 with Class 3 chem film", "O": 2, "detection": "Salt spray history of the finish spec", "D": 6}
+  ],
+  "process": [
+    {"op": 10, "name": "Receive and cut stock", "workcenter": "Receiving", "machine": "Band saw", "makes": ["C10"], "instructions": "Verify mill cert to AMS 4027; cut 3.25 x 2.25 x 1.75"},
+    {"op": 20, "name": "Mill bottom, holes, sides", "workcenter": "VMC", "machine": "3-axis VMC", "setup": "Vise on rough stock", "makes": ["C1", "C2", "C6", "C7", "C8"], "instructions": "Face datum A, drill and ream 4X holes, profile sides"},
+    {"op": 30, "name": "Mill top profile", "workcenter": "VMC", "machine": "3-axis VMC", "setup": "Fixture on A, pins in two B holes", "makes": ["C3"]},
+    {"op": 40, "name": "Bore and pocket", "workcenter": "VMC", "machine": "4-axis VMC", "setup": "Fixture on A, pins in two B holes; bore axis horizontal", "makes": ["C4", "C5", "C9"], "instructions": "Rough, semi-finish, finish bore with boring head; check bore every part"},
+    {"op": 50, "name": "Deburr", "workcenter": "Bench", "makes": []},
+    {"op": 60, "name": "Chemical film", "workcenter": "Outside process", "special_process": "MIL-DTL-5541 Type II Class 3 (approved processor)", "makes": ["C11"]},
+    {"op": 70, "name": "Press and stake bearing, proof test", "workcenter": "Assembly", "machine": "Arbor press, staking tool, load frame", "makes": ["C12"], "instructions": "Press on outer race only; stake 3 places at 120 deg; proof 200 lbf"},
+    {"op": 80, "name": "Mark", "workcenter": "Bench", "makes": ["C13"]},
+    {"op": 90, "name": "Final inspection", "workcenter": "QA", "makes": []}
+  ],
+  "pfmea": [
+    {"id": "P1", "op": 40, "dfmea_ids": ["D1"], "item": "Op 40 finish bore", "function": "Bore to Ø1.1235-1.1240", "failure_mode": "Bore oversize", "effect": "Low interference; bearing may walk out (DFMEA D1)", "S": 8, "cause": "Boring head setting drift or insert wear", "char_ids": ["C4"], "prevention": "Insert change every 25 parts; setup verified on first part", "O": 4, "detection": "Air gauge every part at the machine", "D": 3},
+    {"id": "P2", "op": 40, "dfmea_ids": ["D2"], "item": "Op 40 finish bore", "function": "Bore to Ø1.1235-1.1240", "failure_mode": "Bore undersize", "effect": "High interference; bearing binds (DFMEA D2)", "S": 6, "cause": "Over-correction of offset", "char_ids": ["C4"], "prevention": "Offset change limits in the work instruction", "O": 3, "detection": "Air gauge every part", "D": 3},
+    {"id": "P3", "op": 40, "dfmea_ids": ["D3"], "item": "Op 40 locate", "function": "Locate on A and two B holes", "failure_mode": "Part not seated on fixture", "effect": "Bore out of position; shaft misaligned (DFMEA D3)", "S": 7, "cause": "Chips on the fixture pad", "char_ids": ["C5"], "prevention": "Air blast and wipe before load; seated-part sensor", "O": 3, "detection": "CMM position check 1 in 5", "D": 4},
+    {"id": "P4", "op": 40, "dfmea_ids": ["D4"], "item": "Op 40 pocket", "function": "Pocket depth .318 ±.002", "failure_mode": "Pocket too shallow", "effect": "No staking lip (DFMEA D4)", "S": 8, "cause": "Tool length offset error", "char_ids": ["C9"], "prevention": "Tool presetter; offset verified at setup", "O": 3, "detection": "Depth micrometer every part", "D": 3},
+    {"id": "P5", "op": 70, "dfmea_ids": ["D5"], "item": "Op 70 stake", "function": "Stake 3 places, proof 200 lbf", "failure_mode": "Staking too shallow", "effect": "Bearing pushes out in service (DFMEA D5)", "S": 9, "cause": "Staking tool worn or press stroke short", "char_ids": ["C12"], "prevention": "Hard stop on press; staking tool life count", "O": 3, "detection": "100% proof load in load frame", "D": 2, "actions": "Add a go/no-go stake depth gauge before proof test", "owner": "manufacturing engineer", "due": "2026-11-15", "status": "open"},
+    {"id": "P6", "op": 60, "dfmea_ids": ["D7"], "item": "Op 60 chem film", "function": "Class 3 chem film", "failure_mode": "Coating missing or thin", "effect": "Corrosion in service (DFMEA D7)", "S": 4, "cause": "Processor bath out of control", "char_ids": ["C11"], "prevention": "Approved processor with certs", "O": 3, "detection": "Cert review and visual at receiving", "D": 5}
+  ],
+  "control_plan": [
+    {"char_id": "C4", "op": 40, "method": "Air gauge, 2 readings 90 deg apart", "gauge": "Air plug 1.1235-1.1240", "sample_size": "1", "frequency": "every part", "control_method": "X-bar/R chart, insert change every 25", "reaction_plan": "Stop, quarantine since last good part, adjust offset, 100% sort"},
+    {"char_id": "C5", "op": 40, "method": "CMM, best-fit cylinder to A and B(M)", "gauge": "CMM program EX-0001-40", "sample_size": "1", "frequency": "first part, then 1 in 5", "control_method": "Setup approval", "reaction_plan": "Stop, check fixture seating, 100% CMM since last good part"},
+    {"char_id": "C9", "op": 40, "method": "Depth micrometer from front face", "gauge": "Depth mic 0-1 in, .0001", "sample_size": "1", "frequency": "every part", "control_method": "Setup approval, tool presetter", "reaction_plan": "Stop, correct offset, sort since last good part"},
+    {"char_id": "C12", "op": 70, "method": "Proof load 200 lbf axial, hold 10 s", "gauge": "Load frame with calibrated cell", "sample_size": "1", "frequency": "every part", "control_method": "100% test, results logged by serial", "reaction_plan": "Reject part, NCR, check staking tool and press stop"},
+    {"char_id": "C6", "op": 20, "method": "Surface plate and indicator", "gauge": "Surface plate, .0001 indicator", "sample_size": "1", "frequency": "1 in 10", "control_method": "Setup approval", "reaction_plan": "Stop, check vise, sort lot"},
+    {"char_id": "C11", "op": 60, "method": "Cert review and visual", "gauge": "Processor cert", "sample_size": "lot", "frequency": "every lot", "control_method": "Approved processor", "reaction_plan": "Hold lot, request re-test, NCR"}
+  ],
+  "inspection_plan": [
+    {"char_id": "C1", "stage": "final", "method": "Caliper", "gauge": "Caliper 0-6", "sample": "AQL c=0, n=8"},
+    {"char_id": "C2", "stage": "final", "method": "Caliper", "gauge": "Caliper 0-6", "sample": "AQL c=0, n=8"},
+    {"char_id": "C3", "stage": "final", "method": "Height gauge", "gauge": "Height gauge", "sample": "AQL c=0, n=8"},
+    {"char_id": "C4", "stage": "in-process", "method": "Air gauge", "gauge": "Air plug 1.1235-1.1240", "sample": "100%"},
+    {"char_id": "C5", "stage": "in-process", "method": "CMM", "gauge": "CMM program EX-0001-40", "sample": "1 in 5"},
+    {"char_id": "C6", "stage": "in-process", "method": "Surface plate and indicator", "gauge": "Surface plate", "sample": "1 in 10"},
+    {"char_id": "C7", "stage": "final", "method": "Pin gauges .276 go / .287 no-go", "gauge": "Pin gauge set", "sample": "AQL c=0, n=8"},
+    {"char_id": "C8", "stage": "final", "method": "Functional gauge, 4 pins at virtual condition .262", "gauge": "Functional gauge FG-0001", "sample": "AQL c=0, n=8"},
+    {"char_id": "C9", "stage": "in-process", "method": "Depth micrometer", "gauge": "Depth mic", "sample": "100%"},
+    {"char_id": "C10", "stage": "receiving", "method": "Mill cert review", "gauge": "Cert", "sample": "every heat"},
+    {"char_id": "C11", "stage": "receiving", "method": "Processor cert and visual", "gauge": "Cert", "sample": "every lot"},
+    {"char_id": "C12", "stage": "in-process", "method": "Proof load", "gauge": "Load frame", "sample": "100%"},
+    {"char_id": "C13", "stage": "final", "method": "Visual", "gauge": "Visual", "sample": "100%"},
+    {"char_id": "C4", "stage": "FAI", "method": "CMM", "gauge": "CMM", "sample": "first article, all characteristics"}
+  ],
+  "fai": {
+    "report_no": "FAI-EX-0001-A-001",
+    "type": "full",
+    "serial": "001",
+    "organization": "Example shop",
+    "materials": [{"item": "6061-T651 plate", "spec": "AMS 4027", "supplier": "Example metals", "cert": "Heat 12345 C of C"}],
+    "special_processes": [{"item": "Chemical film", "spec": "MIL-DTL-5541 Type II Class 3", "supplier": "Example finisher", "cert": "Lot 678 C of C"}],
+    "functional_tests": [{"item": "Proof load", "procedure": "200 lbf axial 10 s", "result": "pass, no movement"}],
+    "results": [
+      {"char_id": "C1", "result": 3.002}, {"char_id": "C2", "result": 1.998}, {"char_id": "C3", "result": 1.503},
+      {"char_id": "C4", "result": 1.1238, "tooling": "Air plug"}, {"char_id": "C5", "result": 0.0021}, {"char_id": "C6", "result": 0.0008},
+      {"char_id": "C7", "result": 0.281}, {"char_id": "C8", "result": 0.006, "tooling": "FG-0001"}, {"char_id": "C9", "result": 0.3183},
+      {"char_id": "C10", "result": "conforms"}, {"char_id": "C11", "result": "conforms"}, {"char_id": "C12", "result": "pass"},
+      {"char_id": "C13", "result": "conforms"}
+    ]
+  },
+  "changes": []
+}

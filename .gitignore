@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+build/
+dist/
+
+# Generated documents
+out/
+
+# Licensed standards and export-controlled data: never commit
+standards/
+specs/
